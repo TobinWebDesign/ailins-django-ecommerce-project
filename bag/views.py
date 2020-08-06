@@ -45,9 +45,9 @@ def adjust_bag(request, item_id):
 
     if size:
         if quantity > 0:
-            bag[item_id]['items_by_size']['size'] = quantity
+            bag[item_id]['items_by_size'][size] = quantity
         else:
-            del bag[item_id]['items_by_size']['size']
+            del bag[item_id]['items_by_size'][size]
             if not bag[item_id]['items_by_size']:
                 bag.pop(item_id)
     else:
@@ -59,7 +59,7 @@ def adjust_bag(request, item_id):
     request.session['bag'] = bag  
     return redirect(reverse('view_bag'))
 
-def remove_bag(request, item_id):
+def remove_from_bag(request, item_id):
     ''' Adjust a quantity of the specified  product to the shopping bag'''
 
     try:
@@ -69,7 +69,7 @@ def remove_bag(request, item_id):
         bag = request.session.get('bag', {})
 
         if size:
-            del bag[item_id]['items_by_size']['size']
+            del bag[item_id]['items_by_size'][size]
             if not bag[item_id]['items_by_size']:
                 bag.pop(item_id)
         else:
